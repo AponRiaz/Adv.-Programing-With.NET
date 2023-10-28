@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LabTaskModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="CatId" />
+          </Key>
+          <Property Name="CatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CatDesc" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CatName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustId" Type="int" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CusId" />
+          </Key>
+          <Property Name="CusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CusName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CusAddress" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomersProduct">
+          <Key>
+            <PropertyRef Name="CPid" />
+          </Key>
+          <Property Name="CPid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Custold" Type="int" Nullable="false" />
+          <Property Name="ProduId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProId" />
+          </Key>
+          <Property Name="ProId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProPrice" Type="float" />
+          <Property Name="Cateid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProId" />
+          </Key>
+          <Property Name="ProId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProPrice" Type="float" />
+          <Property Name="Cateid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CustomersProduct_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="CustomersProduct" Type="Self.CustomersProduct" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CusId" />
+            </Principal>
+            <Dependent Role="CustomersProduct">
+              <PropertyRef Name="CPid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="CatId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Cateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Products1">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Products1" Type="Self.Products" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProId" />
+            </Principal>
+            <Dependent Role="Products1">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LabTaskModel2StoreContainer">
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomersProduct" EntityType="Self.CustomersProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustomersProduct_Customers" Association="Self.FK_CustomersProduct_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CustomersProduct" EntitySet="CustomersProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Categorie" Association="Self.FK_Product_Categorie">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Products1" Association="Self.FK_Products_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Products1" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LabTaskModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="CatId" />
+          </Key>
+          <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CatName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustId" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Categorie" FromRole="Categorie" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CusId" />
+          </Key>
+          <Property Name="CusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CusAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CustomersProduct" Relationship="Self.FK_CustomersProduct_Customers" FromRole="Customers" ToRole="CustomersProduct" />
+        </EntityType>
+        <EntityType Name="CustomersProduct">
+          <Key>
+            <PropertyRef Name="CPid" />
+          </Key>
+          <Property Name="CPid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Custold" Type="Int32" Nullable="false" />
+          <Property Name="ProduId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomersProduct_Customers" FromRole="CustomersProduct" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProId" />
+          </Key>
+          <Property Name="ProId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProPrice" Type="Double" />
+          <Property Name="Cateid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK_Product_Categorie" FromRole="Product" ToRole="Categorie" />
+        </EntityType>
+        <EntityType Name="Product1">
+          <Key>
+            <PropertyRef Name="ProId" />
+          </Key>
+          <Property Name="ProId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProPrice" Type="Double" />
+          <Property Name="Cateid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Products1" Relationship="Self.FK_Products_Products1" FromRole="Products" ToRole="Products1" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Products_Products1" FromRole="Products1" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK_Product_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="CatId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Cateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomersProduct_Customers">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomersProduct" Type="Self.CustomersProduct" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CusId" />
+            </Principal>
+            <Dependent Role="CustomersProduct">
+              <PropertyRef Name="CPid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Products1">
+          <End Role="Products" Type="Self.Product1" Multiplicity="1" />
+          <End Role="Products1" Type="Self.Product1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProId" />
+            </Principal>
+            <Dependent Role="Products1">
+              <PropertyRef Name="ProId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LabTaskEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Categorie" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="CustomersProducts" EntityType="Self.CustomersProduct" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Products1" EntityType="Self.Product1" />
+          <AssociationSet Name="FK_Product_Categorie" Association="Self.FK_Product_Categorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomersProduct_Customers" Association="Self.FK_CustomersProduct_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CustomersProduct" EntitySet="CustomersProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Products1" Association="Self.FK_Products_Products1">
+            <End Role="Products" EntitySet="Products1" />
+            <End Role="Products1" EntitySet="Products1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LabTaskModel2StoreContainer" CdmEntityContainer="LabTaskEntities3">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="LabTaskModel2.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="CatId" ColumnName="CatId" />
+                <ScalarProperty Name="CatDesc" ColumnName="CatDesc" />
+                <ScalarProperty Name="CatName" ColumnName="CatName" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="LabTaskModel2.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="CusId" ColumnName="CusId" />
+                <ScalarProperty Name="CusName" ColumnName="CusName" />
+                <ScalarProperty Name="CusAddress" ColumnName="CusAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomersProducts">
+            <EntityTypeMapping TypeName="LabTaskModel2.CustomersProduct">
+              <MappingFragment StoreEntitySet="CustomersProduct">
+                <ScalarProperty Name="CPid" ColumnName="CPid" />
+                <ScalarProperty Name="Custold" ColumnName="Custold" />
+                <ScalarProperty Name="ProduId" ColumnName="ProduId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="LabTaskModel2.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="ProPrice" ColumnName="ProPrice" />
+                <ScalarProperty Name="Cateid" ColumnName="Cateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products1">
+            <EntityTypeMapping TypeName="LabTaskModel2.Product1">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProId" ColumnName="ProId" />
+                <ScalarProperty Name="ProName" ColumnName="ProName" />
+                <ScalarProperty Name="ProPrice" ColumnName="ProPrice" />
+                <ScalarProperty Name="Cateid" ColumnName="Cateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

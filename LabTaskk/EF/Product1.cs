@@ -14,11 +14,12 @@ namespace LabTaskk.EF
     
     public partial class Product1
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<double> Price { get; set; }
-        public int Cid { get; set; }
+        public int ProId { get; set; }
+        public string ProName { get; set; }
+        public Nullable<double> ProPrice { get; set; }
+        public int Cateid { get; set; }
     
-        public virtual Category Category { get; set; }
+        public virtual Product1 Products1 { get; set; }
+        public virtual Product1 Product { get; set; }
     }
 }
